@@ -4,7 +4,6 @@ A simple regression demo comparing **XGBoost** and **LightGBM** models predictin
 
 ## 🔧 Features
 - Clean, minimal code
-- Ready for GitHub portfolio
 - Visualizes actual vs predicted values
 - Easy to extend
 
