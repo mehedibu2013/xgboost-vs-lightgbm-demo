@@ -1,0 +1,35 @@
+# xgboost_model.py
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from xgboost import XGBRegressor
+from sklearn.metrics import mean_squared_error, r2_score
+import matplotlib.pyplot as plt
+
+# Load dataset
+df = pd.read_csv('data/boston_housing.csv')
+X = df.drop('MEDV', axis=1)
+y = df['MEDV']
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Model
+model = XGBRegressor(n_estimators=100, learning_rate=0.1, max_depth=3, random_state=42)
+model.fit(X_train, y_train)
+
+# Predict
+y_pred = model.predict(X_test)
+
+# Metrics
+rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+r2 = r2_score(y_test, y_pred)
+print(f"RMSE: {rmse:.2f}, R²: {r2:.2f}")
+
+# Plot
+plt.scatter(y_test, y_pred)
+plt.xlabel("Actual")
+plt.ylabel("Predicted")
+plt.title("XGBoost Prediction")
+plt.savefig('predictions_xgboost.png')
+plt.show()
